@@ -56,9 +56,10 @@ Open minikube dashboard
 
 # kubernetes finally
 
-Apply app
+Apply apps
 
 	cd kube/foo && kubectl apply -f deployment.yml 
+	cd kube/bar && kubectl apply -f deployment.yml 
 
 List pods
 
@@ -71,6 +72,7 @@ Attach shell to one of them
 Apply service
 
 	cd kube/foo && kubectl apply -f service.yml 
+	cd kube/bar && kubectl apply -f service.yml 
 
 List services
 
