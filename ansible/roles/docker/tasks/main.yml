@@ -1,0 +1,57 @@
+- name: disable selinux
+  selinux: state=disabled
+  tags: ['centos']
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: install EPEL on CentOS
+  tags: ['centos']
+  yum:
+    name: epel-release
+    state: latest
+  when:
+    - ansible_distribution == "CentOS"
+
+#- name: turnoff iptables
+#  service: name=firewalld state=stopped enabled=no
+#  tags: ['centos']
+#  when:
+#    - ansible_distribution == "CentOS"
+
+- name: install yum applications
+  tags: ['common', 'make']
+  yum:
+    name: ['@Development tools', 'git', 'docker', 'python-pip']
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: Install python libraries
+  pip:
+    name: ['docker']
+
+- name: start docker
+  tags: ['service']
+  service: name=docker state=started enabled=yes
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: Pull image
+  docker_image:
+    name: centos
+    source: pull
+
+#- name: Build image
+#  docker_image:
+#    path: /root/docker
+#    name: webimage
+
+- name: Create a container
+  docker_container:
+    name: web
+    image: webimage
+    state: started
+    ports:
+      - "8080:80"
+    tty: true
+    detach: true

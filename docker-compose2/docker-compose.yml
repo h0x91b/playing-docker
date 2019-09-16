@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  db:
+    container_name: mariadb3
+    build: ./db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - ./db/data:/var/lib/mysql
+
+  adminer:
+    container_name: adminer3
+    build: ./adminer
+    restart: always
+    ports:
+      - 8082:8080
