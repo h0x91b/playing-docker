@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-foo-app
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube-foo-app
+  template:
+    metadata:
+      labels:
+        app: kube-foo-app
+    spec:
+      containers:
+        - image: h0x91b/foo:v1
+          name: nginx
+          ports:
+            - containerPort: 3001
