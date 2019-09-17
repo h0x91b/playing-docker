@@ -98,3 +98,15 @@ Apply ingress
 
 	kubectl apply -f Ingress.yaml
 
+Open /foo and /bar via ingress
+
+	open $(printf "http://%s/foo" $(minikube ip))
+	open $(printf "http://%s/bar" $(minikube ip))
+
+# Clean up
+
+	kubectl delete -f kube/ingress.yml
+	kubectl delete -f kube/foo/service.yml
+	kubectl delete -f kube/bar/service.yml
+	kubectl delete -f kube/foo/deployment.yml
+	kubectl delete -f kube/bar/deployment.yml
