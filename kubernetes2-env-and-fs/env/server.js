@@ -1,5 +1,6 @@
 let express = require('express');
 let app = express();
+let fs = require('fs');
 
 app.get('/', (req, res) => {
 	let obj = {
@@ -11,6 +12,14 @@ app.get('/', (req, res) => {
 			...process.env
 		},
 	};
+
+	fs.stat('/var/log/app/', (err, stat)=>{
+		if(err || !stat.isDirectory()) return;
+		fs.appendFile('/var/log/app/log.txt', `${new Date()} - request to /\n`, (err) => {
+			if (err) throw err;
+		});
+	});
+
 	res.end(JSON.stringify(obj, null, '    '));
 });
 

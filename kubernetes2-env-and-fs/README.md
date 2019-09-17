@@ -1,8 +1,10 @@
 # kubernetes - lesson 2 - env variables and file system
 
+(https://www.youtube.com/watch?v=L8ipc7LOvdc)
+
 Make an image from `env`
 
-	cd env && docker build -t h0x91b/env:v2 .
+	docker build -t h0x91b/env:v4 env/
 
 Run this to see created image
 
@@ -10,7 +12,7 @@ Run this to see created image
 
 Run an image
 
-	cd env/ && docker run -p 3001:3001 $(docker images | grep h0x91b/env | awk '{print $3}')
+	docker run -p 3001:3001 $(docker images | grep h0x91b/env | awk '{print $3}')
 
 Check
 
@@ -20,9 +22,9 @@ Push image, you will need to authorize your docker firstly
 
 	docker login
 
-Then push images
+Then push image
 
-	docker push h0x91b/env:v2
+	docker push h0x91b/env:v4
 
 Prepare local kubernetes
 ===
@@ -71,8 +73,27 @@ Open it via ingress
 
 # FS
 
+Apply persistent volumes
+
+	kubectl apply -f kube/persistent-volume.yml
+
+Apply new deployment
+
+	kubectl apply -f kube/env/deployment-fs.yml 
+
+Open ssh to minikube
+
+	minikube ssh
+
+Check the logs from a persistent storage
+
+	tail -f /var/log/nodelogs/log.txt
+
 # Clean up
 
 	kubectl delete -f kube/ingress.yml
 	kubectl delete -f kube/env/service.yml
-	kubectl delete -f kube/env/deployment.yml
+	kubectl delete -f kube/env/deployment-fs.yml
+	kubectl delete -f kube/persistent-volume.yml
+	kubectl delete -f kube/secret.yml
+	kubectl delete -f kube/config-map.yml

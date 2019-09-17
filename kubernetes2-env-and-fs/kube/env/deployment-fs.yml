@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-env-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube-env-app
+  template:
+    metadata:
+      labels:
+        app: kube-env-app
+    spec:
+      volumes:
+        - name: logs-storage
+          persistentVolumeClaim:
+            claimName: logs-of-env-app
+      containers:
+        - image: h0x91b/env:v4
+          volumeMounts:
+            - mountPath: "/var/log/app/"
+              name: logs-storage
+          name: kube-env-app
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: DB_HOST
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: dbpass
+                  key: passwordKeyInYml

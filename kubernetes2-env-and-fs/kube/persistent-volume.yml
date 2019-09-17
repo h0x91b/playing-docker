@@ -1,0 +1,29 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: logs-of-env-app
+  labels:
+    name: logs-volume
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/log/nodelogs"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: logs-of-env-app
+spec:
+  storageClassName: manual
+  selector:
+    matchLabels:
+      name: logs-volume
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
