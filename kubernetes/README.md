@@ -86,17 +86,13 @@ Check what IP of minikube
 
 	minikube ip
 
-Open service in web
-
-	open $(printf "http://%s:32001/" $(minikube ip))
-
 Turn on ingress on minikube
 
 	minikube addons enable ingress
 
 Apply ingress
 
-	kubectl apply -f ingress.yml
+	kubectl apply -f kube/ingress.yml
 
 Open /foo and /bar via ingress
 
