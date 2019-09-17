@@ -1,5 +1,7 @@
 # kubernetes
 
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
 Run docker
 
 Make an image from `foo` and `bar`
@@ -58,8 +60,8 @@ Open minikube dashboard
 
 Apply apps
 
-	cd kube/foo && kubectl apply -f deployment.yml 
-	cd kube/bar && kubectl apply -f deployment.yml 
+	kubectl apply -f kube/foo/deployment.yml 
+	kubectl apply -f kube/bar/deployment.yml 
 
 List pods
 
@@ -71,8 +73,8 @@ Attach shell to one of them
 
 Apply service
 
-	cd kube/foo && kubectl apply -f service.yml 
-	cd kube/bar && kubectl apply -f service.yml 
+	kubectl apply -f kube/foo/service.yml 
+	kubectl apply -f kube/bar/service.yml 
 
 List services
 
@@ -85,3 +87,12 @@ Check what IP of minikube
 Open service in web
 
 	open $(printf "http://%s:32001/" $(minikube ip))
+
+Turn on ingress on minikube
+
+	minikube addons enable ingress
+
+Apply ingress
+
+	kubectl apply -f Ingress.yaml
+
