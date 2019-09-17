@@ -96,7 +96,7 @@ Turn on ingress on minikube
 
 Apply ingress
 
-	kubectl apply -f Ingress.yaml
+	kubectl apply -f ingress.yml
 
 Open /foo and /bar via ingress
 
