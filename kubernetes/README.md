@@ -1,4 +1,6 @@
-# kubernetes
+# kubernetes - lesson 1
+
+https://youtu.be/ErvySVWY0g8
 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
