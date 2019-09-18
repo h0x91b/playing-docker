@@ -71,7 +71,7 @@ List pods
 
 Attach shell to one of them
 
-	kubectl exec -ti $(kubectl get pods | grep kube-foo-app | awk '{print $1}') sh
+	kubectl exec -ti $(kubectl get pods | grep kube-foo-app | head -n 1 | awk '{print $1}') sh
 
 Apply service
 
