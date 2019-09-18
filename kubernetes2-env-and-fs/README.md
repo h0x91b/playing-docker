@@ -39,6 +39,14 @@ Open minikube dashboard
 
 # ENV vars
 
+Apply config-map
+
+	kubectl apply -f kube/config-map.yml 
+
+Apply secrets
+
+	kubectl apply -f kube/secret.yml 
+
 Apply app
 
 	kubectl apply -f kube/env/deployment.yml 
@@ -58,14 +66,6 @@ List services
 Apply ingress
 
 	kubectl apply -f kube/ingress.yml
-
-Apply config-map
-
-	kubectl apply -f kube/config-map.yml 
-
-Apply secrets
-
-	kubectl apply -f kube/secret.yml 
 
 Open it via ingress
 
