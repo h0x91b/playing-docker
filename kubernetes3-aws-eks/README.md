@@ -92,11 +92,11 @@ Deploy ingress controller
 
 Apply ingress
 
-	kubectl apply -f kube/ingress.yml
+	TBD
 
 Open it via ingress
 
-	open $(printf "http://%s/" $(minikube ip))
+	TBD
 
 # Clean up
 
