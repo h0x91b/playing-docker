@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-demo-worker-app-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube-demo-worker-app
+  template:
+    metadata:
+      labels:
+        app: kube-demo-worker-app
+    spec:
+      containers:
+        - image: eu.gcr.io/h0x91b-140109/demo-worker:v5
+          name: kube-demo-worker-app
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3001
+              httpHeaders:
+                - name: Foo
+                  value: Bar
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-worker-config
+                  key: DB_HOST
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-worker-config
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: dbpass
+                  key: passwordKeyInYml
